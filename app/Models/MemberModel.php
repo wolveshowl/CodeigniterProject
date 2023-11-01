@@ -14,7 +14,7 @@ class MemberModel extends Model {
     protected $insertID             = 0;
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;    
-    protected $allowedFields        = ['id', 'password'];
+    protected $allowedFields        = ['access_token', 'refresh_token'];
 
     public function getMemberInfo() {        
         return $this->findAll();
@@ -28,5 +28,12 @@ class MemberModel extends Model {
         return $this->insert($data);
     }
     
+    public function updateAccessAndRefreshToken($data) {
+        $this->db->table("member")->where("mem_no", $data['mem_no'])->update($data);        
+    }
+
+    public function selectAccessTokenByRefreshToken($data) {
+        return $this->db->table("member")->where("refresh_token", $data)->get()->getRow();
+    }
 }
 ?>
