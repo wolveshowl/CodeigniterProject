@@ -122,7 +122,8 @@ CI_ENVIRONMENT = development
 #--------------------------------------------------------------------
 # JWT
 #--------------------------------------------------------------------
-JWT_SECRET = eargipj30i09j2g4j0rgj7585rejg0psjgejgwo630hoijp
+ACCESS_KEY = eargipj30i09j2g4j0rgj7585rejg0psjgejgwo630hoijp
+REFRESH_KEY = awheflkeawl46ihsdiof092hilkfsdh24089y8924hflksn
 
 #--------------------------------------------------------------------
 # SESSION
