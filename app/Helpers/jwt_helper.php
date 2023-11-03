@@ -93,5 +93,24 @@ class JWT_helper {
         $memberModel = new MemberModel();
         return $memberModel->selectAccessTokenByRefreshToken($refreshToken);
     }
+
+    public function decode($token) {
+
+        // 헤더로 요청받은 엑세스 토큰
+        // $header = array(
+        //     'Authorization' => $_SERVER['HTTP_AUTHORIZATION']
+        // );
+        
+        // 엑세스 토큰 디코딩 후 해당하는 회원의 데이터(계정 ID)를 가져옴
+        $jwtHelper = new JWT_helper();
+        $data = $jwtHelper->jwtDecodeData($token);        
+
+        $response = [
+            'message' => '회원 조회 성공',
+            'id' => $data->id,            
+        ];
+        
+        return json_decode($data->id);
+    }
 }
 ?>

@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\MemberModel;
 
-class RegisterController extends BaseController {
+class Register extends BaseController {
 
     use ResponseTrait;
 
