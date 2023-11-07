@@ -93,5 +93,6 @@ class JWT_helper {
         $memberModel = new MemberModel();
         return $memberModel->selectAccessTokenByRefreshToken($refreshToken);
     }
+
 }
 ?>

@@ -41,6 +41,7 @@ class Auth extends BaseController {
         set_cookie('accessToken', $accessToken, 3600);
         set_cookie('refreshToken', $refreshToken, 604800);        
         
+        
         $tokenData = [
             'mem_no' => $member->mem_no,
             'access_token' => $accessToken,
@@ -54,36 +55,24 @@ class Auth extends BaseController {
         ];
 
         $memberModel->updateAccessAndRefreshToken($tokenData);
-
+                        
         return $this->respond($response, 200);
 
     }
 
-    public function decode() {
-
-        // 헤더로 요청받은 엑세스 토큰
-        $header = array(
-            'Authorization' => $_SERVER['HTTP_AUTHORIZATION']
-        );
-        
-        // 엑세스 토큰 디코딩 후 해당하는 회원의 데이터(계정 ID)를 가져옴
-        $jwtHelper = new JWT_helper();
-        $data = $jwtHelper->jwtDecodeData($header['Authorization']);        
-
-        $response = [
-            'message' => '회원 조회 성공',
-            'id' => $data->id,            
-        ];
-        
-        return $this->respond($response, 200);
-    }
+    
 
     public function accessTokenUpdate() {
         
         $jwtHelper = new JWT_helper();
         $memberModel = new MemberModel();
         
-        $getToken = get_cookie('refreshToken');
+        $getToken = get_cookie('refreshToken');        
+
+        if($getToken == "") {
+            return redirect()->to("info");
+        }
+
         $findMember = $memberModel->selectAccessTokenByRefreshToken($getToken);
         $accessToken = $jwtHelper->jwtEncodeData($findMember->mem_id);
         $refreshToken = $jwtHelper->jwtCreateRefreshToken();
@@ -107,6 +96,10 @@ class Auth extends BaseController {
         
         return $this->respond($response, 200);
                             
+    }
+
+    public function phpInfo() {
+        return view('info');
     }
 
     public function set_cookie($name, $value, $exp) {
