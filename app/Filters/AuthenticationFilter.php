@@ -20,11 +20,9 @@ class AuthenticationFilter implements FilterInterface {
 
     public function before(RequestInterface $request, $arguments = null) {
         
-        $uri = new URI(current_url());
+        // $uri = new URI(current_url());
         $jwtHelper = new JWT_helper();
-        $memberModel = new MemberModel();
-                    
-    
+                            
         // 헤더에 토큰이 없다면 로그인 페이지로 이동
         $authHeader = $request->getHeaderLine('Authorization');
         
@@ -36,7 +34,7 @@ class AuthenticationFilter implements FilterInterface {
        
         try {
             $decoded = $jwtHelper->jwtDecodeData($_SERVER['HTTP_AUTHORIZATION']);
-            $findMember = $memberModel->getMemberOne($decoded->id);             
+            // $findMember = $memberModel->getMemberOne($decoded->id);             
         } catch (ExpiredException $e) {
             return Services::response()->setStatusCode(401, '토큰 만료');
         } catch (\Exception $e) {
